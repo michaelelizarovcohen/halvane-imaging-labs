@@ -1,0 +1,6 @@
+[
+  {"path": "docs/evidence/originals/HIL-2505.orf", "tag": "IFD0:Make", "marker": "Solutions", "contains": "OM Digital Solutions",
+   "reason": "Authentic camera manufacturer name written by the OM System TG-7; must not be altered."},
+  {"path": "docs/evidence/originals/HIL-1507.jpg", "tag": "Google:SummaryText", "marker": "synthetic", "contains": "LTM using 5 synthetic exposures",
+   "reason": "Authentic Google HDR+ processing log embedded by the Pixel 6 Pro camera; must not be altered."}
+]
