@@ -3,12 +3,13 @@
 # wait for the build, then verify every published evidence file against the local copies.
 #
 # Requires GitHub CLI auth whose token can: create repositories / administer this repo (Administration: write),
-# push (Contents: write) and configure Pages (Pages: write). CUSTOM_DOMAIN defaults to none.
-# Usage: scripts/publish.sh [REPORT_PATH]
+# push (Contents: write) and configure Pages (Pages: write). A classic token needs the `repo` scope instead.
+# CUSTOM_DOMAIN defaults to none; if set, docs/CNAME is committed before pushing and DNS is NOT changed.
+# Usage: [OWNER=<user-or-org>] scripts/publish.sh [REPORT_PATH]   (OWNER defaults to the authenticated gh user)
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 REPO="${REPO:-halvane-imaging-labs}"
-OWNER="$(gh api user --jq .login)"
+OWNER="${OWNER:-$(gh api user --jq .login)}"
 CUSTOM_DOMAIN="${CUSTOM_DOMAIN:-}"
 REPORT="${1:-}"
 
@@ -19,13 +20,19 @@ if ! gh repo view "$OWNER/$REPO" >/dev/null 2>&1; then
     --description "Fictional company - OSINT and EXIF/XMP metadata training environment (GitHub Pages)" \
     --homepage "https://$OWNER.github.io/$REPO/"
 fi
-git remote get-url origin >/dev/null 2>&1 || git remote add origin "https://github.com/$OWNER/$REPO.git"
-git push -u origin main            # pre-push hook re-runs the content gate
-
+if git remote get-url origin >/dev/null 2>&1; then
+  git remote set-url origin "https://github.com/$OWNER/$REPO.git"
+else
+  git remote add origin "https://github.com/$OWNER/$REPO.git"
+fi
 if [ -n "$CUSTOM_DOMAIN" ]; then
   printf '%s\n' "$CUSTOM_DOMAIN" > docs/CNAME
-  echo "DNS (not changed by this script): CNAME $CUSTOM_DOMAIN -> $OWNER.github.io"
+  git add docs/CNAME && git commit -m "Set custom domain $CUSTOM_DOMAIN" >/dev/null
+  echo "DNS to create yourself: CNAME $CUSTOM_DOMAIN -> $OWNER.github.io (apex: A records 185.199.108-111.153)"
 fi
+git config http.postBuffer 1048576000
+git push -u origin --all           # pre-push hook re-runs the content gate
+git push origin --tags
 
 if gh api "repos/$OWNER/$REPO/pages" >/dev/null 2>&1; then
   gh api -X PUT "repos/$OWNER/$REPO/pages" -f "source[branch]=main" -f "source[path]=/docs" >/dev/null

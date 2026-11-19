@@ -6,7 +6,7 @@ metadata in 86 real photographs (RAW, HEIF/HEIC and JPEG from about 50 different
 an invented corporate website: team pages, projects, a news archive, a public equipment register and a client
 report under review.
 
-- Live site: https://michaelelizarov.github.io/halvane-imaging-labs/
+- Live site: https://michaelelizarovcohen.github.io/halvane-imaging-labs/
 - Start with the lab notice: `docs/lab-notice/index.html` (`/lab-notice/` on the live site), then the student worksheet.
 - No forms, accounts, analytics, cookies or third-party scripts. `robots.txt` disallows crawling and pages carry `noindex`.
 
