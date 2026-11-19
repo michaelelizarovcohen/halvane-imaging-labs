@@ -35,6 +35,7 @@ Download **HIL-2501**. Report its make, model and `DateTimeOriginal`. Which fiel
 
 ### B2 - Coordinates
 (a) Extract decimal GPS latitude, longitude and altitude from **HIL-1118**. Put the coordinates into a map and name the lake and the nearest village.
+
 (b) Download all 28 Smartphone Field Panel originals (HIL-1201 to HIL-1228). How many contain GPS coordinates? Use a single ExifTool command with `-if`.
 
 ### B3 - Model codes
@@ -59,6 +60,7 @@ A 2010 newsletter (News, March 2010) says **HIL-1012** and **HIL-1013** were sho
 
 ### I1 - Who held the camera?
 (a) Using serial numbers and the Field Kit Library, determine who most likely photographed **HIL-1104**.
+
 (b) Felix's "Autumn rugged-kit tour 2021" post shows **HIL-1411** and **HIL-1413**. Confirm which kit items took them, where each was taken, how many days apart, and the straight-line distance between the two positions.
 
 ### I2 - Window seat
@@ -107,6 +109,7 @@ Build a table for all seven TIDEMARK-25 figures: device, serial (or internal ser
 
 ### A8 - Clocks and quirks
 (a) For **HIL-1104**, work out the camera's UTC offset and how far its clock drifted from GPS time.
+
 (b) **HIL-1405**, **HIL-1409** and **HIL-1413** each carry a `CreateDate` far from their capture date. Is this evidence of tampering? Justify your view.
 
 ## Bonus (optional, external)

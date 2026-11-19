@@ -401,6 +401,7 @@ def md_to_html(md):
         s = e(s)
         s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
         s = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", s)
+        s = re.sub(r"(?<![\w*])\*([^*\s][^*]*?)\*(?![\w*])", r"<em>\1</em>", s)
         s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
         return s
     while i < len(lines):
@@ -488,7 +489,7 @@ Changes: rights and descriptive XMP metadata added; pixel data unchanged. Adapte
 (<a href="https://lesc.dinfo.unifi.it/VISION/" rel="noopener">lesc.dinfo.unifi.it/VISION</a>). Only original images from the <code>nat</code> folders are used.
 Changes: rights and descriptive XMP metadata added; pixel data unchanged. Adapted files are licensed CC BY-SA 4.0.
 Citation: D. Shullani, M. Fontani, M. Iuliani, O. Al Shaya, A. Piva, &ldquo;VISION: a video and image dataset for source identification,&rdquo;
-<em>EURASIP Journal on Information Security</em>, 2017:15, 2017. <a href="https://doi.org/10.1186/s13635-017-0067-2" rel="noopener">doi:10.1186/s13635-017-0067-2</a>.</li>
+<em>EURASIP Journal on Information Security</em>, vol. 2017, no. 1, 2017. <a href="https://doi.org/10.1186/s13635-017-0067-2" rel="noopener">doi:10.1186/s13635-017-0067-2</a>.</li>
 <li><strong>ExifTool Meta Information Repository</strong> &mdash; used only as an external reference; nothing from it is hosted here
 (<a href="https://exiftool.org/sample_images.html" rel="noopener">exiftool.org/sample_images.html</a>).</li></ul>
 <p>Licence texts: <a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="license noopener">CC0 1.0</a>,

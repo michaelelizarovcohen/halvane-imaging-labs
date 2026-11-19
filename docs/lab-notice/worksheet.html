@@ -22,7 +22,7 @@
 <section class="wrap section narrow worksheet"><h1 id="student-worksheet">Student worksheet</h1>
 <p>Halvane Imaging Labs is a fictional company built for this OSINT and digital-forensics lab. Read the <a href="index.html">lab notice</a> first.</p>
 <h2 id="ground-rules">Ground rules</h2>
-<ul><li>Work only from the <strong>original files</strong> (gallery &quot;Download original&quot; buttons, or <code>evidence/originals/</code>) and the pages of this site. Previews carry no metadata.</li><li>Verify each download against <code>evidence/SHA256SUMS.txt</code> before you start (<code>sha256sum -c</code> from inside <code>evidence/</code>).</li><li>Record every finding with: the asset ID, the exact field name (with its group, e.g. <code>ExifIFD:DateTimeOriginal</code>), the value, and the command you used.</li><li>Distinguish what a file *records* from what a page *claims*. Say how confident you are and why.</li><li>Comparing files with upstream copies from the source collections is outside the scope of these exercises.</li></ul>
+<ul><li>Work only from the <strong>original files</strong> (gallery &quot;Download original&quot; buttons, or <code>evidence/originals/</code>) and the pages of this site. Previews carry no metadata.</li><li>Verify each download against <code>evidence/SHA256SUMS.txt</code> before you start (<code>sha256sum -c</code> from inside <code>evidence/</code>).</li><li>Record every finding with: the asset ID, the exact field name (with its group, e.g. <code>ExifIFD:DateTimeOriginal</code>), the value, and the command you used.</li><li>Distinguish what a file <em>records</em> from what a page <em>claims</em>. Say how confident you are and why.</li><li>Comparing files with upstream copies from the source collections is outside the scope of these exercises.</li></ul>
 <h2 id="setup">Setup</h2>
 <pre><code># all tags, with group names, no duplicates suppressed
 exiftool -a -G1 -s FILE
@@ -40,7 +40,8 @@ exiftool -ImageDataHash -api ImageHashType=SHA256 FILE</code></pre>
 <h3 id="b1-first-contact">B1 - First contact</h3>
 <p>Download <strong>HIL-2501</strong>. Report its make, model and <code>DateTimeOriginal</code>. Which field tells you the marketing name of the camera module?</p>
 <h3 id="b2-coordinates">B2 - Coordinates</h3>
-<p>(a) Extract decimal GPS latitude, longitude and altitude from <strong>HIL-1118</strong>. Put the coordinates into a map and name the lake and the nearest village. (b) Download all 28 Smartphone Field Panel originals (HIL-1201 to HIL-1228). How many contain GPS coordinates? Use a single ExifTool command with <code>-if</code>.</p>
+<p>(a) Extract decimal GPS latitude, longitude and altitude from <strong>HIL-1118</strong>. Put the coordinates into a map and name the lake and the nearest village.</p>
+<p>(b) Download all 28 Smartphone Field Panel originals (HIL-1201 to HIL-1228). How many contain GPS coordinates? Use a single ExifTool command with <code>-if</code>.</p>
 <h3 id="b3-model-codes">B3 - Model codes</h3>
 <p>Phones often record an internal model code instead of a marketing name. Identify the marketing names for the devices behind <strong>HIL-1219</strong>, <strong>HIL-1214</strong> and <strong>HIL-1228</strong>.</p>
 <h3 id="b4-glass">B4 - Glass</h3>
@@ -55,7 +56,8 @@ exiftool -ImageDataHash -api ImageHashType=SHA256 FILE</code></pre>
 <p>A 2010 newsletter (News, March 2010) says <strong>HIL-1012</strong> and <strong>HIL-1013</strong> were shot &quot;the same afternoon&quot;. Test that claim with the files.</p>
 <h2 id="intermediate">Intermediate</h2>
 <h3 id="i1-who-held-the-camera">I1 - Who held the camera?</h3>
-<p>(a) Using serial numbers and the Field Kit Library, determine who most likely photographed <strong>HIL-1104</strong>. (b) Felix&#x27;s &quot;Autumn rugged-kit tour 2021&quot; post shows <strong>HIL-1411</strong> and <strong>HIL-1413</strong>. Confirm which kit items took them, where each was taken, how many days apart, and the straight-line distance between the two positions.</p>
+<p>(a) Using serial numbers and the Field Kit Library, determine who most likely photographed <strong>HIL-1104</strong>.</p>
+<p>(b) Felix&#x27;s &quot;Autumn rugged-kit tour 2021&quot; post shows <strong>HIL-1411</strong> and <strong>HIL-1413</strong>. Confirm which kit items took them, where each was taken, how many days apart, and the straight-line distance between the two positions.</p>
 <h3 id="i2-window-seat">I2 - Window seat</h3>
 <p>For <strong>HIL-1401</strong>, compare <code>DateTimeOriginal</code> with <code>GPSDateTime</code>. What UTC offset was the phone using, what region does that suggest, and what does the GPS altitude tell you about where the photographer was?</p>
 <h3 id="i3-the-rail-walk">I3 - The rail walk</h3>
@@ -86,7 +88,8 @@ exiftool -ImageDataHash -api ImageHashType=SHA256 FILE</code></pre>
 <h3 id="a7-reconcile-the-register">A7 - Reconcile the register</h3>
 <p>Build a table for all seven TIDEMARK-25 figures: device, serial (or internal serial), Field Kit Library tag, holder on the capture date, real capture date, and whether the <code>Artist</code> field is consistent with the register.</p>
 <h3 id="a8-clocks-and-quirks">A8 - Clocks and quirks</h3>
-<p>(a) For <strong>HIL-1104</strong>, work out the camera&#x27;s UTC offset and how far its clock drifted from GPS time. (b) <strong>HIL-1405</strong>, <strong>HIL-1409</strong> and <strong>HIL-1413</strong> each carry a <code>CreateDate</code> far from their capture date. Is this evidence of tampering? Justify your view.</p>
+<p>(a) For <strong>HIL-1104</strong>, work out the camera&#x27;s UTC offset and how far its clock drifted from GPS time.</p>
+<p>(b) <strong>HIL-1405</strong>, <strong>HIL-1409</strong> and <strong>HIL-1413</strong> each carry a <code>CreateDate</code> far from their capture date. Is this evidence of tampering? Justify your view.</p>
 <h2 id="bonus-optional-external">Bonus (optional, external)</h2>
 <h3 id="x1-reference-structures">X1 - Reference structures</h3>
 <p>The ExifTool Meta Information Repository (exiftool.org/sample_images.html) publishes real metadata from thousands of cameras with replaced pixels. Download the archive for one maker represented here (for example DJI or Canon), find a model from the same family as a Halvane file, and compare the maker-note structure. Does anything in the Halvane file look out of place? Nothing from the repository is hosted on this site.</p>
