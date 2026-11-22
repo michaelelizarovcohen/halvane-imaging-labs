@@ -1,0 +1,4 @@
+# Never convert line endings or apply filters to anything; evidence files must stay byte-identical.
+* -text
+docs/evidence/** binary
+# Git LFS is deliberately NOT used: GitHub Pages does not serve LFS objects.

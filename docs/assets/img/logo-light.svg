@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Halvane Imaging Labs">
+<rect width="64" height="64" rx="14" fill="#ffffff"/>
+<path d="M32 9 51.9 20.5v23L32 55 12.1 43.5v-23Z" fill="none" stroke="#0f2d44" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M22 21v22M42 21v22" stroke="#0f2d44" stroke-width="4" stroke-linecap="round"/>
+<path d="M14 33.5c4.5-3 9-3 13.5 0s9 3 13.5 0 6.8-2.6 9 -1.4" fill="none" stroke="#14716b" stroke-width="3.4" stroke-linecap="round"/>
+</svg>

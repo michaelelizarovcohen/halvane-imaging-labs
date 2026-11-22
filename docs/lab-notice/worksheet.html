@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="description" content="Independent field and bench evaluation of cameras, phones and aerial imaging systems - and the metadata they leave behind.">
+<title>Student worksheet | Halvane Imaging Labs</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="../index.html" aria-label="Halvane Imaging Labs home"><img src="../assets/img/logo.svg" alt="" width="40" height="40"><span><strong>Halvane</strong> Imaging Labs</span></a>
+    <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false">Menu</button>
+    <nav id="site-nav" aria-label="Main"><ul><li><a href="../index.html">Home</a></li><li><a href="../about.html">About</a></li><li><a href="../team.html">Team</a></li><li><a href="../services.html">Services</a></li><li><a href="../projects/index.html">Projects</a></li><li><a href="../gallery/index.html">Gallery</a></li><li><a href="../news/index.html">News</a></li><li><a href="../careers.html">Careers</a></li><li><a href="../media-kit.html">Media kit</a></li><li><a href="../contact.html">Contact</a></li></ul></nav>
+  </div>
+</header>
+<main id="main">
+<section class="wrap section narrow worksheet"><h1 id="student-worksheet">Student worksheet</h1>
+<p>Halvane Imaging Labs is a fictional company built for this OSINT and digital-forensics lab. Read the <a href="index.html">lab notice</a> first.</p>
+<h2 id="ground-rules">Ground rules</h2>
+<ul><li>Work only from the <strong>original files</strong> (gallery &quot;Download original&quot; buttons, or <code>evidence/originals/</code>) and the pages of this site. Previews carry no metadata.</li><li>Verify each download against <code>evidence/SHA256SUMS.txt</code> before you start (<code>sha256sum -c</code> from inside <code>evidence/</code>).</li><li>Record every finding with: the asset ID, the exact field name (with its group, e.g. <code>ExifIFD:DateTimeOriginal</code>), the value, and the command you used.</li><li>Distinguish what a file <em>records</em> from what a page <em>claims</em>. Say how confident you are and why.</li><li>Comparing files with upstream copies from the source collections is outside the scope of these exercises.</li></ul>
+<h2 id="setup">Setup</h2>
+<pre><code># all tags, with group names, no duplicates suppressed
+exiftool -a -G1 -s FILE
+
+# numeric values (decimal GPS, raw numbers)
+exiftool -n -GPSLatitude -GPSLongitude -GPSAltitude FILE
+
+# every date/time field in a file (see &quot;Time zones&quot; below)
+TZ=UTC exiftool -a -G1 -s -time:all FILE
+
+# a pixel-data fingerprint that ignores metadata
+exiftool -ImageDataHash -api ImageHashType=SHA256 FILE</code></pre>
+<p><strong>Time zones.</strong> ExifTool converts some stored UTC times into <em>your computer&#x27;s</em> time zone before showing them: the QuickTime dates in CR3 files and a few maker-note clocks (for example <code>Samsung:TimeStamp</code> and <code>Google:CreateDate</code>). Two people on different computers then see different values, sometimes even a different day. Put <code>TZ=UTC</code> in front of every time-related command, for example <code>TZ=UTC exiftool -a -G1 -s -time:all FILE</code>, so that everyone sees the same UTC values. Fields that carry no time zone of their own, such as <code>DateTimeOriginal</code>, are shown exactly as stored either way. The prefix works in macOS and Linux shells (and in WSL on Windows).</p>
+<p>Useful pages: <a href="../gallery/index.html">Gallery</a>, <a href="../projects/index.html">Projects</a>, <a href="../news/index.html">News</a>, <a href="../team.html">Team</a>, <a href="../kit-library.html">Field Kit Library</a>.</p>
+<h2 id="beginner">Beginner</h2>
+<h3 id="b1-first-contact">B1 - First contact</h3>
+<p>Download <strong>HIL-2501</strong>. Report its make, model and <code>DateTimeOriginal</code>. Which field tells you the marketing name of the camera module?</p>
+<h3 id="b2-coordinates">B2 - Coordinates</h3>
+<p>(a) Extract decimal GPS latitude, longitude and altitude from <strong>HIL-1118</strong>. Put the coordinates into a map and name the lake and the nearest village.</p>
+<p>(b) Download all 28 Smartphone Field Panel originals (HIL-1201 to HIL-1228). How many contain GPS coordinates? Use a single ExifTool command with <code>-if</code>.</p>
+<h3 id="b3-model-codes">B3 - Model codes</h3>
+<p>Phones often record an internal model code instead of a marketing name. Identify the marketing names for the devices behind <strong>HIL-1219</strong>, <strong>HIL-1214</strong> and <strong>HIL-1228</strong>.</p>
+<h3 id="b4-glass">B4 - Glass</h3>
+<p>Which lenses were used for <strong>HIL-1311</strong>, <strong>HIL-1309</strong> and <strong>HIL-2502</strong>? Which field(s) did you rely on, and do any files expose more than one lens field?</p>
+<h3 id="b5-software-signatures">B5 - Software signatures</h3>
+<p>What does the <code>Software</code> field say for <strong>HIL-1124</strong> and <strong>HIL-1401</strong>? What does that tell you about how the photos were taken?</p>
+<h3 id="b6-formats">B6 - Formats</h3>
+<p>Without opening the files in an image viewer, identify the file type and camera maker of <strong>HIL-1012</strong>, <strong>HIL-1016</strong>, <strong>HIL-1510</strong>, <strong>HIL-1019</strong> and <strong>HIL-1405</strong>.</p>
+<h3 id="b7-check-the-caption">B7 - Check the caption</h3>
+<p>The caption of <strong>HIL-1506</strong> says it is a Galaxy S22 Ultra test. Does the file agree? Which time zone was the device set to?</p>
+<h3 id="b8-same-afternoon">B8 - Same afternoon?</h3>
+<p>A 2010 newsletter (News, March 2010) says <strong>HIL-1012</strong> and <strong>HIL-1013</strong> were shot &quot;the same afternoon&quot;. Test that claim with the files.</p>
+<h2 id="intermediate">Intermediate</h2>
+<h3 id="i1-who-held-the-camera">I1 - Who held the camera?</h3>
+<p>(a) Using serial numbers and the Field Kit Library, determine who most likely photographed <strong>HIL-1104</strong>.</p>
+<p>(b) Felix&#x27;s &quot;Autumn rugged-kit tour 2021&quot; post shows <strong>HIL-1411</strong> and <strong>HIL-1413</strong>. Confirm which kit items took them, where each was taken, how many days apart, and the straight-line distance between the two positions.</p>
+<h3 id="i2-window-seat">I2 - Window seat</h3>
+<p>For <strong>HIL-1401</strong>, compare <code>DateTimeOriginal</code> with <code>GPSDateTime</code>. What UTC offset was the phone using, what region does that suggest, and what does the GPS altitude tell you about where the photographer was?</p>
+<h3 id="i3-the-rail-walk">I3 - The rail walk</h3>
+<p>The Florence lab walked a stretch of railway on 22 August 2015 with four handsets (<strong>HIL-1226</strong>, <strong>HIL-1210</strong>, <strong>HIL-1215</strong>, <strong>HIL-1225</strong>). Put the frames in capture order, list the device used for each, and calculate the straight-line distance between the first and last GPS fixes. Which frame cannot be placed on the map, and why?</p>
+<h3 id="i4-one-phone-or-two">I4 - One phone or two?</h3>
+<p><strong>HIL-1202</strong> and <strong>HIL-1225</strong> both come from a &quot;Galaxy S III mini&quot;. <strong>HIL-1201</strong> and <strong>HIL-1210</strong> both come from an iPhone 4S. For each pair, decide whether one physical device could have taken both photos. Use model codes, firmware/OS versions and dates.</p>
+<h3 id="i5-the-boulder-walk">I5 - The Boulder walk</h3>
+<p>Owen&#x27;s June 2020 post says <strong>HIL-1501</strong>, <strong>HIL-1503</strong> and <strong>HIL-1504</strong> were taken near the Boulder office. Test that claim with the time fields. Then explain the relationship between <strong>HIL-1501</strong> and <strong>HIL-1502</strong>, and what the location in <strong>HIL-1502</strong> is worth.</p>
+<h3 id="i6-careers-page">I6 - Careers page</h3>
+<p>The Careers page shows <strong>HIL-1505</strong> as &quot;the Boulder team&#x27;s January lunchtime walk, two blocks from the office&quot;. Verify the location and time zone.</p>
+<h3 id="i7-whose-camera-app">I7 - Whose camera app?</h3>
+<p><strong>HIL-1121</strong> reports an unusual maker. What is going on with this phone and its camera software? Where and in which UTC offset was it taken?</p>
+<h3 id="i8-texture-week">I8 - Texture Week</h3>
+<p>The 2015 Texture Week winner (<strong>HIL-1325</strong>) was credited to reader &quot;M. H. Grey&quot;. Using the file and the Field Kit Library, what can you say about who actually took it? Look for supporting clues elsewhere on the site.</p>
+<h2 id="advanced">Advanced</h2>
+<h3 id="a1-tidemark-25-what-really-happened-in-may">A1 - TIDEMARK-25: what really happened in May?</h3>
+<p>The TIDEMARK-25 report says all seven figures (<strong>HIL-2501</strong> to <strong>HIL-2507</strong>) were captured during the field week of 5-9 May 2025. For each figure, determine the most likely real capture date and whether it falls inside the field week.</p>
+<h3 id="a2-edited-timestamps">A2 - Edited timestamps</h3>
+<p>Which TIDEMARK-25 figures carry a <code>DateTimeOriginal</code> that disagrees with the file&#x27;s other time fields? List every conflicting field and value. Which independent clock inside one of the files is most persuasive, and why?</p>
+<h3 id="a3-a-familiar-frame">A3 - A familiar frame</h3>
+<p>One TIDEMARK-25 figure has exactly the same pixel data as an Archive Zero file. Find it, prove it, and explain what each copy&#x27;s metadata says about the capture date, the camera owner and the location. Could this camera have recorded GPS on its own?</p>
+<h3 id="a4-wrong-place">A4 - Wrong place</h3>
+<p>Two TIDEMARK-25 figures carry coordinates in Thuringia. Map them, then compare each scene with its coordinates. Identify where each scene really is (or what kind of place it must be), using visible features. Who held the camera that took <strong>HIL-2503</strong>, and when?</p>
+<h3 id="a5-wrong-clock">A5 - Wrong clock</h3>
+<p>Explain the time-zone problem in <strong>HIL-2505</strong>. Using the Field Kit Library and the Team page, reconstruct when and where it was most likely taken and whether its camera was part of the TIDEMARK-25 kit.</p>
+<h3 id="a6-edit-history">A6 - Edit history</h3>
+<p>Extract the XMP edit history (<code>XMP-xmpMM:History</code>) from all seven figures. Group the figures by workstation and time. Combine this with the News pages to establish where Jonas Ekdahl was when each group was edited and which desk the later edits came from. Note any other field that differs between the two groups. State clearly what the evidence does and does not prove.</p>
+<h3 id="a7-reconcile-the-register">A7 - Reconcile the register</h3>
+<p>Build a table for all seven TIDEMARK-25 figures: device, serial (or internal serial), Field Kit Library tag, holder on the capture date, real capture date, and whether the <code>Artist</code> field is consistent with the register.</p>
+<h3 id="a8-clocks-and-quirks">A8 - Clocks and quirks</h3>
+<p>(a) For <strong>HIL-1104</strong>, work out the camera&#x27;s UTC offset and how far its clock drifted from GPS time.</p>
+<p>(b) <strong>HIL-1405</strong>, <strong>HIL-1409</strong> and <strong>HIL-1413</strong> each carry a <code>CreateDate</code> far from their capture date. Is this evidence of tampering? Justify your view.</p>
+<h2 id="bonus-optional-external">Bonus (optional, external)</h2>
+<h3 id="x1-reference-structures">X1 - Reference structures</h3>
+<p>The ExifTool Meta Information Repository (exiftool.org/sample_images.html) publishes real metadata from thousands of cameras with replaced pixels. Download the archive for one maker represented here (for example DJI or Canon), find a model from the same family as a Halvane file, and compare the maker-note structure. Does anything in the Halvane file look out of place? Nothing from the repository is hosted on this site.</p>
+<h2 id="reporting-template">Reporting template</h2>
+<div class="table-wrap"><table><thead><tr><th>Exercise</th><th>Asset(s)</th><th>Field(s) and values</th><th>Command(s)</th><th>Finding</th><th>Confidence</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div></section>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand brand-footer" href="../index.html"><img src="../assets/img/logo-light.svg" alt="" width="32" height="32"><span><strong>Halvane</strong> Imaging Labs</span></a>
+      <p class="muted">Field-proven imaging evaluation. Copenhagen &middot; Florence &middot; Boulder.</p>
+    </div>
+    <div>
+      <h2 class="footer-h">Company</h2>
+      <ul class="plain"><li><a href="../about.html">About</a></li><li><a href="../team.html">Team</a></li><li><a href="../careers.html">Careers</a></li><li><a href="../contact.html">Contact</a></li></ul>
+    </div>
+    <div>
+      <h2 class="footer-h">Work</h2>
+      <ul class="plain"><li><a href="../projects/index.html">Projects</a></li><li><a href="../gallery/index.html">Gallery</a></li><li><a href="../kit-library.html">Field Kit Library</a></li><li><a href="../media-kit.html">Media kit</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap footer-note"><a href="../lab-notice/index.html">Fictional company — OSINT training environment</a></div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+# Fictional training site. Indexing controls are not access controls.
+User-agent: *
+Disallow: /
